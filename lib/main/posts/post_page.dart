@@ -40,10 +40,9 @@ class _PostPageState extends ConsumerState<PostPage> {
   @override
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
-
+    // scoffold
     return Scaffold(
-      backgroundColor:
-          isLight ? const Color(0xFFF4F5F7) : Colors.transparent,
+      backgroundColor: isLight ? const Color(0xFFF4F5F7) : Colors.transparent,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -70,18 +69,13 @@ class _PostPageState extends ConsumerState<PostPage> {
 
               TextField(
                 maxLines: 6,
-                style: TextStyle(
-                  color: isLight ? Colors.black : Colors.white,
-                ),
+                style: TextStyle(color: isLight ? Colors.black : Colors.white),
                 onChanged: (v) {
-                  ref
-                      .read(postcontrollerProvider.notifier)
-                      .setDescription(v);
+                  ref.read(postcontrollerProvider.notifier).setDescription(v);
                 },
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor:
-                      isLight ? Colors.white : Colors.white12,
+                  fillColor: isLight ? Colors.white : Colors.white12,
                   hintText: "Write something...",
                   hintStyle: TextStyle(
                     color: isLight ? Colors.black45 : Colors.white30,
@@ -103,11 +97,8 @@ class _PostPageState extends ConsumerState<PostPage> {
                     icon: const Icon(Icons.image),
                     label: const Text("Add Image"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: isLight
-                          ? Colors.white
-                          : Colors.white24,
-                      foregroundColor:
-                          isLight ? Colors.black : Colors.white,
+                      backgroundColor: isLight ? Colors.white : Colors.white24,
+                      foregroundColor: isLight ? Colors.black : Colors.white,
                     ),
                   ),
                   ElevatedButton.icon(
@@ -115,11 +106,8 @@ class _PostPageState extends ConsumerState<PostPage> {
                     icon: const Icon(Icons.videocam),
                     label: const Text("Add Video"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: isLight
-                          ? Colors.white
-                          : Colors.white24,
-                      foregroundColor:
-                          isLight ? Colors.black : Colors.white,
+                      backgroundColor: isLight ? Colors.white : Colors.white24,
+                      foregroundColor: isLight ? Colors.black : Colors.white,
                     ),
                   ),
                 ],
@@ -138,7 +126,7 @@ class _PostPageState extends ConsumerState<PostPage> {
                             BoxShadow(
                               color: Colors.black.withOpacity(0.1),
                               blurRadius: 8,
-                            )
+                            ),
                           ]
                         : [],
                   ),
@@ -147,16 +135,12 @@ class _PostPageState extends ConsumerState<PostPage> {
                           child: Icon(
                             Icons.videocam,
                             size: 80,
-                            color:
-                                isLight ? Colors.black54 : Colors.white,
+                            color: isLight ? Colors.black54 : Colors.white,
                           ),
                         )
                       : ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.file(
-                            selectedMedia!,
-                            fit: BoxFit.cover,
-                          ),
+                          child: Image.file(selectedMedia!, fit: BoxFit.cover),
                         ),
                 ),
 
@@ -176,16 +160,14 @@ class _PostPageState extends ConsumerState<PostPage> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xff4c5c9b),
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 18),
+                    padding: const EdgeInsets.symmetric(vertical: 18),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   child: const Text(
                     "Publish Post",
-                    style:
-                        TextStyle(fontSize: 18, color: Colors.white),
+                    style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),
               ),
