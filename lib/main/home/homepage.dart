@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:skillshare_hub/main/common/navigation.dart';
 
+// TODO: Refactor HomePage animations later
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -20,7 +21,6 @@ class _HomePageState extends State<HomePage> {
     const darkBg = Color.fromARGB(255, 42, 46, 76);
 
     return Scaffold(
-      
       backgroundColor: isLight ? const Color(0xFFF4F5F7) : darkBg,
 
       body: SafeArea(
@@ -29,7 +29,6 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -115,7 +114,6 @@ class _HomePageState extends State<HomePage> {
               const WelcomeSection(),
               const SizedBox(height: 30),
 
-              
               Text(
                 "Recommended Tasks",
                 style: TextStyle(
@@ -136,9 +134,7 @@ class _HomePageState extends State<HomePage> {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return const Center(child: CircularProgressIndicator());
                     }
 
                     if (snapshot.data!.docs.isEmpty) {
@@ -146,8 +142,7 @@ class _HomePageState extends State<HomePage> {
                         child: Text(
                           "No tasks available",
                           style: TextStyle(
-                            color:
-                                isLight ? Colors.black54 : Colors.white70,
+                            color: isLight ? Colors.black54 : Colors.white70,
                           ),
                         ),
                       );
@@ -157,8 +152,9 @@ class _HomePageState extends State<HomePage> {
                       scrollDirection: Axis.horizontal,
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        final data = snapshot.data!.docs[index]
-                            .data() as Map<String, dynamic>;
+                        final data =
+                            snapshot.data!.docs[index].data()
+                                as Map<String, dynamic>;
 
                         final acceptCount =
                             (data["acceptedBy"] as List?)?.length ?? 0;
@@ -177,7 +173,6 @@ class _HomePageState extends State<HomePage> {
 
               const SizedBox(height: 30),
 
-            
               Text(
                 "Recent Posts",
                 style: TextStyle(
@@ -194,15 +189,13 @@ class _HomePageState extends State<HomePage> {
                     .orderBy("timestamp", descending: true)
                     .snapshots(),
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData ||
-                      snapshot.data!.docs.isEmpty) {
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                     return Padding(
                       padding: const EdgeInsets.all(20),
                       child: Text(
                         "No posts yet",
                         style: TextStyle(
-                          color:
-                              isLight ? Colors.black54 : Colors.white70,
+                          color: isLight ? Colors.black54 : Colors.white70,
                         ),
                       ),
                     );
@@ -210,8 +203,7 @@ class _HomePageState extends State<HomePage> {
 
                   return Column(
                     children: snapshot.data!.docs.map((doc) {
-                      final data =
-                          doc.data() as Map<String, dynamic>;
+                      final data = doc.data() as Map<String, dynamic>;
 
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 12),
@@ -222,10 +214,8 @@ class _HomePageState extends State<HomePage> {
                           time: _formatTime(data["timestamp"]),
                           imageUrl: data["imageUrl"],
                           videoUrl: data["videoUrl"],
-                          likedBy:
-                              List.from(data["likedBy"] ?? []),
-                          commentCount:
-                              data["commentCount"] ?? 0,
+                          likedBy: List.from(data["likedBy"] ?? []),
+                          commentCount: data["commentCount"] ?? 0,
                         ),
                       );
                     }).toList(),
@@ -248,9 +238,6 @@ class _HomePageState extends State<HomePage> {
     return "${diff.inDays}d ago";
   }
 }
-
-
-
 
 class _RecommendedTaskCard extends StatefulWidget {
   final String title;
@@ -278,16 +265,20 @@ class _RecommendedTaskCardState extends State<_RecommendedTaskCard>
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-
-    _fade = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
     );
 
-    _slide = Tween(begin: const Offset(0, 0.15), end: Offset.zero).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
+    _fade = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+    _slide = Tween(
+      begin: const Offset(0, 0.15),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
     _controller.forward();
   }
@@ -315,9 +306,7 @@ class _RecommendedTaskCardState extends State<_RecommendedTaskCard>
                 ? const Color(0xFFFDFDFD) // soft off-white
                 : const Color.fromARGB(255, 60, 65, 100),
             borderRadius: BorderRadius.circular(18),
-            border: isLight
-                ? Border.all(color: Colors.grey.shade200)
-                : null,
+            border: isLight ? Border.all(color: Colors.grey.shade200) : null,
             boxShadow: [
               BoxShadow(
                 color: isLight
@@ -331,14 +320,13 @@ class _RecommendedTaskCardState extends State<_RecommendedTaskCard>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
-                  color: isLight
-                      ? Colors.grey.shade100
-                      : Colors.white12,
+                  color: isLight ? Colors.grey.shade100 : Colors.white12,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -352,7 +340,6 @@ class _RecommendedTaskCardState extends State<_RecommendedTaskCard>
 
               const SizedBox(height: 14),
 
-              
               Text(
                 widget.title,
                 maxLines: 2,
@@ -366,7 +353,6 @@ class _RecommendedTaskCardState extends State<_RecommendedTaskCard>
 
               const Spacer(),
 
-              
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -401,6 +387,7 @@ class _RecommendedTaskCardState extends State<_RecommendedTaskCard>
     );
   }
 }
+
 class WelcomeSection extends StatelessWidget {
   const WelcomeSection({super.key});
 
@@ -426,12 +413,10 @@ class WelcomeSection extends StatelessWidget {
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
             color: isLight
-                ? const Color(0xFFFDFDFD) 
+                ? const Color(0xFFFDFDFD)
                 : const Color.fromARGB(255, 60, 65, 100),
             borderRadius: BorderRadius.circular(18),
-            border: isLight
-                ? Border.all(color: Colors.grey.shade200)
-                : null,
+            border: isLight ? Border.all(color: Colors.grey.shade200) : null,
             boxShadow: [
               BoxShadow(
                 color: isLight
@@ -444,11 +429,11 @@ class WelcomeSection extends StatelessWidget {
           ),
           child: Row(
             children: [
-             
               CircleAvatar(
                 radius: 26,
-                backgroundColor:
-                    isLight ? Colors.grey.shade200 : Colors.white24,
+                backgroundColor: isLight
+                    ? Colors.grey.shade200
+                    : Colors.white24,
                 child: Icon(
                   Icons.person,
                   color: isLight ? Colors.black87 : Colors.white,
@@ -457,7 +442,6 @@ class WelcomeSection extends StatelessWidget {
 
               const SizedBox(width: 14),
 
-              
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -486,4 +470,3 @@ class WelcomeSection extends StatelessWidget {
     );
   }
 }
-
