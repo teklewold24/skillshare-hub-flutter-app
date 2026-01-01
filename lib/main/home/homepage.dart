@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:skillshare_hub/main/common/navigation.dart';
 
-// TODO: Refactor HomePage animations later
+// TODO: Refactor HomePage animations later"
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
